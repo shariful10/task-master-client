@@ -1,9 +1,9 @@
 import { RootState } from "@/redux/store";
-import { TTasks } from "@/types";
+import { TTask } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type TInitialState = {
-	tasks: TTasks[];
+	tasks: TTask[];
 	filter: "All" | "High" | "Medium" | "Low";
 };
 
@@ -19,11 +19,11 @@ const initialState: TInitialState = {
 		},
 		{
 			id: "1514554165489479",
-			title: "Create github repo",
-			description: "Initialize the github repo for the project",
+			title: "Create GitHub repo",
+			description: "Initialize the GitHub repo for the project",
 			dueDate: "2025-01-13",
 			isCompleted: false,
-			priority: "High",
+			priority: "Medium",
 		},
 	],
 	filter: "All",
@@ -33,7 +33,7 @@ export const taskSlice = createSlice({
 	name: "task",
 	initialState,
 	reducers: {
-		addTodo: (state, action: PayloadAction<TTasks>) => {
+		addTodo: (state, action: PayloadAction<TTask>) => {
 			state.tasks.push(action.payload);
 		},
 	},
