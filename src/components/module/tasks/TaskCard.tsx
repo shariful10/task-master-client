@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { TTask } from "@/types";
+import { Trash2 } from "lucide-react";
 
 type TTaskProps = {
 	task: TTask;
@@ -23,7 +24,7 @@ const TaskCard = ({ task }: TTaskProps) => {
 				</div>
 				<div className="flex gap-3 items-center">
 					<Button variant="link" className="p-0 text-red-500">
-						Trust
+						<Trash2 />
 					</Button>
 					<Checkbox />
 				</div>
