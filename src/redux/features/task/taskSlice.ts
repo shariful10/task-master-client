@@ -1,8 +1,14 @@
-import { TInitialState, TTask } from "@/types";
+import { RootState } from "@/redux/store";
+import { TTasks } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type TInitialState = {
+	tasks: TTasks[];
+	filter: "All" | "High" | "Medium" | "Low";
+};
+
 const initialState: TInitialState = {
-	task: [
+	tasks: [
 		{
 			id: "1514554165489489",
 			title: "Initialize frontend",
@@ -20,17 +26,26 @@ const initialState: TInitialState = {
 			priority: "High",
 		},
 	],
+	filter: "All",
 };
 
 export const taskSlice = createSlice({
 	name: "task",
 	initialState,
 	reducers: {
-		addTodo: (state, action: PayloadAction<TTask>) => {
-			state.task.push(action.payload);
+		addTodo: (state, action: PayloadAction<TTasks>) => {
+			state.tasks.push(action.payload);
 		},
 	},
 });
+
+export const selectTasks = (state: RootState) => {
+	return state.todo.tasks;
+};
+
+export const selectFilter = (state: RootState) => {
+	return state.todo.filter;
+};
 
 export const { addTodo } = taskSlice.actions;
 export default taskSlice.reducer;
