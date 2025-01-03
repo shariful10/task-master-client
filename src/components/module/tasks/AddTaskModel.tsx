@@ -11,13 +11,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function DialogDemo() {
+export const DialogDemo = () => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button variant="default">Edit Profile</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
+				<DialogDescription className="sr-only">
+					Fill up this form to add task
+				</DialogDescription>
 				<DialogHeader>
 					<DialogTitle>Add Task</DialogTitle>
 					<DialogDescription>
@@ -52,4 +55,4 @@ export function DialogDemo() {
 			</DialogContent>
 		</Dialog>
 	);
-}
+};
