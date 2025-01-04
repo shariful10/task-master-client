@@ -36,17 +36,14 @@ import { useAppDispatch } from "@/redux/hooks";
 import { TTask } from "@/types";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const AddTaskModal = () => {
 	const form = useForm<TTask>();
 	const dispatch = useAppDispatch();
 
-	const id = "01245663";
-
-	const onSubmit = (data: TTask) => {
-		data.id = id;
-		dispatch(addTodo(data));
+	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		dispatch(addTodo(data as TTask));
 	};
 
 	return (
