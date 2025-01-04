@@ -13,7 +13,10 @@ const initialState: TInitialState = {
 	filter: "All",
 };
 
-type DraftTask = Pick<TTask, "title" | "description" | "priority" | "dueDate">;
+type DraftTask = Pick<
+	TTask,
+	"title" | "description" | "priority" | "dueDate" | "assignedTo"
+>;
 
 const createTask = (taskData: DraftTask): TTask => {
 	return {

@@ -36,7 +36,7 @@ import { updateTask } from "@/redux/features/task/taskSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { TTask, TTaskProps } from "@/types";
 import { format } from "date-fns";
-import { CalendarIcon, PenIcon } from "lucide-react";
+import { CalendarIcon, Pencil } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 const UpdateTaskModal = ({ task }: TTaskProps) => {
@@ -51,7 +51,7 @@ const UpdateTaskModal = ({ task }: TTaskProps) => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<PenIcon className="text-[#20B256] size-5 cursor-pointer" />
+				<Pencil className="text-[#20B256] size-4 cursor-pointer" />
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>

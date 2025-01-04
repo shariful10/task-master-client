@@ -33,8 +33,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { priorityOptions, TPriorityOption } from "@/constants/priorityOptions";
 import { cn } from "@/lib/utils";
 import { addTodo } from "@/redux/features/task/taskSlice";
-import { useAppDispatch } from "@/redux/hooks";
-import { TTask } from "@/types";
+import { selectUsers } from "@/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { TTask, TUser } from "@/types";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -42,6 +43,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 const AddTaskModal = () => {
 	const form = useForm<TTask>();
 	const dispatch = useAppDispatch();
+	const users = useAppSelector(selectUsers);
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		dispatch(addTodo(data as TTask));
@@ -107,6 +109,34 @@ const AddTaskModal = () => {
 													);
 												}
 											)}
+										</SelectContent>
+									</Select>
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="assignedTo"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Assigned To</FormLabel>
+									<Select
+										onValueChange={field.onChange}
+										defaultValue={field.value}
+									>
+										<FormControl>
+											<SelectTrigger>
+												<SelectValue placeholder="Select a priority to set" />
+											</SelectTrigger>
+										</FormControl>
+										<SelectContent>
+											{users?.map((user: TUser) => {
+												return (
+													<SelectItem value={user.id} key={user.id}>
+														{user.name}
+													</SelectItem>
+												);
+											})}
 										</SelectContent>
 									</Select>
 								</FormItem>

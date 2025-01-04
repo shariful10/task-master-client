@@ -5,16 +5,20 @@ import {
 	deleteTask,
 	toggleCompleteState,
 } from "@/redux/features/task/taskSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { selectUsers } from "@/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { TTaskProps } from "@/types";
 import { Trash2 } from "lucide-react";
-import UpdateTaskModal from "./updateTaskModal";
+import UpdateTaskModal from "./UpdateTaskModal";
 
 const TaskCard = ({ task }: TTaskProps) => {
 	const dispatch = useAppDispatch();
+	const users = useAppSelector(selectUsers);
+
+	const assignedUser = users.find((user) => user.id === task.assignedTo);
 
 	return (
-		<div className="border px-5 py-3 rounded-xl">
+		<div className="border border-primary px-5 py-3 rounded-xl">
 			<div className="flex justify-between items-center mb-3">
 				<div className="flex gap-2 items-center">
 					<div
@@ -36,8 +40,14 @@ const TaskCard = ({ task }: TTaskProps) => {
 					/>
 				</div>
 			</div>
+			<p className="w-[90%] mb-2">
+				<span className="font-semibold">Assigned To - </span>
+				{assignedUser ? assignedUser.name : "Unknown"}
+			</p>
 			<div className="flex justify-between">
-				<p className="w-[90%]">{task.description}</p>
+				<div className="flex flex-col justify-between">
+					<p className="w-[90%]">{task.description}</p>
+				</div>
 				<Button
 					onClick={() => dispatch(deleteTask(task.id))}
 					variant="link"
