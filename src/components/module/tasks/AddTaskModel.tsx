@@ -15,7 +15,7 @@ export const DialogDemo = () => {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="default">Edit Profile</Button>
+				<Button variant="default">Add Task</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogDescription className="sr-only">

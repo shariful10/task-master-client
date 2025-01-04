@@ -6,3 +6,7 @@ export type TTask = {
 	isCompleted: boolean;
 	priority: "High" | "Medium" | "Low";
 };
+
+export type TTaskProps = {
+	task: TTask;
+};

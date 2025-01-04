@@ -32,29 +32,30 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { priorityOptions, TPriorityOption } from "@/constants/priorityOptions";
 import { cn } from "@/lib/utils";
-import { addTodo } from "@/redux/features/task/taskSlice";
+import { updateTask } from "@/redux/features/task/taskSlice";
 import { useAppDispatch } from "@/redux/hooks";
-import { TTask } from "@/types";
+import { TTask, TTaskProps } from "@/types";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, PenIcon } from "lucide-react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
-const AddTaskModal = () => {
+const UpdateTaskModal = ({ task }: TTaskProps) => {
 	const form = useForm<TTask>();
 	const dispatch = useAppDispatch();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		dispatch(addTodo(data as TTask));
+		data.id = task.id;
+		dispatch(updateTask(data as TTask));
 	};
 
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button>Add Task</Button>
+				<PenIcon className="text-[#20B256] size-5 cursor-pointer" />
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Add Task</DialogTitle>
+					<DialogTitle>Update Task</DialogTitle>
 				</DialogHeader>
 				<Form {...form}>
 					<form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
@@ -65,7 +66,7 @@ const AddTaskModal = () => {
 								<FormItem>
 									<FormLabel>Title</FormLabel>
 									<FormControl>
-										<Input {...field} value={field.value || ""} />
+										<Input {...field} value={field.value || task.title} />
 									</FormControl>
 								</FormItem>
 							)}
@@ -77,7 +78,10 @@ const AddTaskModal = () => {
 								<FormItem>
 									<FormLabel>Description</FormLabel>
 									<FormControl>
-										<Textarea {...field} value={field.value || ""} />
+										<Textarea
+											{...field}
+											value={field.value || task.description}
+										/>
 									</FormControl>
 								</FormItem>
 							)}
@@ -90,7 +94,7 @@ const AddTaskModal = () => {
 									<FormLabel>Priority</FormLabel>
 									<Select
 										onValueChange={field.onChange}
-										defaultValue={field.value}
+										defaultValue={field.value || task.priority}
 									>
 										<FormControl>
 											<SelectTrigger>
@@ -141,7 +145,9 @@ const AddTaskModal = () => {
 											<Calendar
 												mode="single"
 												selected={
-													field.value ? new Date(field.value) : undefined
+													field.value
+														? new Date(field.value)
+														: new Date(task.dueDate)
 												}
 												onSelect={field.onChange}
 												initialFocus
@@ -165,4 +171,4 @@ const AddTaskModal = () => {
 	);
 };
 
-export default AddTaskModal;
+export default UpdateTaskModal;
