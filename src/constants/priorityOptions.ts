@@ -1,7 +1,3 @@
 export type TPriorityOption = "Low" | "Medium" | "High";
 
-export const priorityOptions: TPriorityOption[] = [
-	"Low",
-	"Medium",
-	"High",
-] as const;
+export const priorityOptions: TPriorityOption[] = ["Low", "Medium", "High"];

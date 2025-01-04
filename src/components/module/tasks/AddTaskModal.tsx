@@ -31,6 +31,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { priorityOptions, TPriorityOption } from "@/constants/priorityOptions";
 import { cn } from "@/lib/utils";
+import { addTodo } from "@/redux/features/task/taskSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { TTask } from "@/types";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -38,9 +40,13 @@ import { useForm } from "react-hook-form";
 
 const AddTaskModal = () => {
 	const form = useForm<TTask>();
+	const dispatch = useAppDispatch();
+
+	const id = "01245663";
 
 	const onSubmit = (data: TTask) => {
-		console.log(data);
+		data.id = id;
+		dispatch(addTodo(data));
 	};
 
 	return (
