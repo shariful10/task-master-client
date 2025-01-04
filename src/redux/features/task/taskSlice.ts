@@ -1,3 +1,4 @@
+import { TPriorityOption } from "@/constants/priorityOptions";
 import { RootState } from "@/redux/store";
 import { TTask } from "@/types";
 import { createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
@@ -46,25 +47,44 @@ export const taskSlice = createSlice({
 			if (task) {
 				const updatedTask = {
 					...action.payload,
-					id: task.id,
 					dueDate: action.payload.dueDate
 						? new Date(action.payload.dueDate)
 						: task.dueDate,
 				};
+
 				Object.assign(task, updatedTask);
 			}
+		},
+		updateFilter: (state, action: PayloadAction<TPriorityOption>) => {
+			state.filter = action.payload;
 		},
 	},
 });
 
 export const selectTasks = (state: RootState) => {
-	return state.todo.tasks;
+	const filter = state.todo.filter;
+
+	if (filter === "Low") {
+		return state.todo.tasks.filter((task) => task.priority === "Low");
+	} else if (filter === "Medium") {
+		return state.todo.tasks.filter((task) => task.priority === "Medium");
+	} else if (filter === "High") {
+		return state.todo.tasks.filter((task) => task.priority === "High");
+	} else {
+		return state.todo.tasks;
+	}
 };
 
 export const selectFilter = (state: RootState) => {
 	return state.todo.filter;
 };
 
-export const { addTodo, toggleCompleteState, deleteTask, updateTask } =
-	taskSlice.actions;
+export const {
+	addTodo,
+	deleteTask,
+	updateTask,
+	updateFilter,
+	toggleCompleteState,
+} = taskSlice.actions;
+
 export default taskSlice.reducer;
